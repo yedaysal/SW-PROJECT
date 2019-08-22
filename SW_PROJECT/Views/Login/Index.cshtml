@@ -1,0 +1,63 @@
+﻿<!--LOGIN INDEX-->
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Information System</title>
+
+
+    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="/LoginPage/css/style.css">
+    
+    
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form-signin">
+            <h2 class="form-signin-heading">Student Information System</h2>
+            <input type="text" class="form-control" name="usernumber" placeholder="School Number" required="" autofocus="" onkeypress="OnPressEnter(event)" />
+            <input type="password" class="form-control" name="password" placeholder="Password" required=""  onkeypress="OnPressEnter(event)" />
+            <p class="text-danger text-center" style="margin-bottom: 20px; display: none;" id="hatali_sifre">Invalid Username or Password</p>
+            <button class="btn btn-lg btn-primary btn-block" id="submit">Login</button>
+        </div>
+      
+    </div>
+
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+
+<script>
+    function OnPressEnter(e) {
+        if (e.keyCode == 13) {
+            $("#submit").click();
+        }
+    }
+
+    $("#submit").click(function () {
+        $.ajax({
+
+            url: "/Login/Confirm/?usernumber=" + $("input[name='usernumber']").val() + "&password=" + $("input[name='password']").val(),
+            type: "post",
+            dataType: "json",
+            success: function (loginvalue) {
+                if (loginvalue) {
+                    window.location.href = "/Home/Index";
+                }
+                else {
+                    $("#hatali_sifre").css("display", "block");
+                }
+                
+            }
+
+        });
+    });
+</script>

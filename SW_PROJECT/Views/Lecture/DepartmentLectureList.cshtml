@@ -1,0 +1,66 @@
+﻿@using SW_PROJECT.Models;
+@model List<Departments>
+@{
+    ViewBag.Title = "DepartmentLectureList";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Lecture List</h1>
+    
+        <form method="post" action="/Lecture/DepartmentLectureList">
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Department:</label>
+                </div>
+                <select name="DeptID" class="custom-select" id="departmens">
+                    <option>Please Select a Department...</option>
+                    @{
+                        foreach (var x in Model)
+                        {
+                            <option value="@x.ID">@x.DeptName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <hr />
+
+            <table class="table" id="lec_table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Lecture Name</th>
+                        <th scope="col">Lecture Credit</th>
+                        <th scope="col">Lecture Term</th>
+                        <th scope="col">Operations</th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+            </table>
+
+        </form>
+    </div>
+</div>
+        @section Script{
+            <script>
+                $("#departmens").on("change", function () {
+                    $("#lec_table > tbody").empty();
+                    $.ajax({
+                        url: "/Lecture/DepartmentLectureList/" + $(this).val(),
+                        type: "post",
+                        dataType: "json",
+                        success: function (lectures) {
+                            for (var i = 0; i < lectures.length; i++) {
+                                $("#lec_table").append(
+                                    "<tr><td>"+ (i+1) + "</td><td>" + lectures[i].depName + "</td><td>" + lectures[i].depKredi + "</td><td>" + lectures[i].depDonem + "</td><td><a href='/Lecture/DeleteLecture/" + lectures[i].depID + "'><i class='fa fa-trash'></i></a>  &emsp; <a href='/Lecture/EditLecture/" + lectures[i].depID + "'><i class='fa fa-pencil'></i></a></td></tr>" 
+                                );
+                            }
+                        },
+                    });
+
+                });
+            </script>
+        }

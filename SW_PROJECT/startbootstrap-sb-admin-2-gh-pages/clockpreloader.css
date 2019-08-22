@@ -1,0 +1,58 @@
+/* vars */
+preloader-size = 4rem
+preloader-border-size = .4rem
+preloader-color = #2085E6
+preloader-spin-duration = 10s;
+preloader-spin-duration-fast = preloader-spin-duration/10;
+
+/* end vars */
+
+.preloader {
+  position: absolute;
+  width: preloader-size;
+  height: preloader-size;
+  border: preloader-border-size solid preloader-color;
+  border-radius: 100%;
+}
+.preloader:before,
+.preloader:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -.2rem 0 0 -.2rem;
+  border-bottom: preloader-border-size solid preloader-color;
+  border-radius: .6rem;
+  -webkit-transform-origin: .2rem center;
+}
+.preloader:before { /* hour hand */
+  width: 30%;
+  -webkit-animation: hour preloader-spin-duration linear infinite;
+}
+.preloader:after { /* minute hand */
+  width: 40%;
+  background-color: preloader-color;
+  -webkit-animation: minute preloader-spin-duration-fast linear infinite;
+}
+
+@-webkit-keyframes hour {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes minute {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+/* for demo purposes only — not required */
+.preloader {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+

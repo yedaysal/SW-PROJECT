@@ -1,0 +1,29 @@
+﻿@using SW_PROJECT.Models;
+@model IEnumerable<Students>
+@{
+    ViewBag.Title = "TakenLectureList";
+}
+
+
+
+      <table class="table">
+          <thead>
+              <tr>
+                  
+                  <th scope="col">Lecture Name</th>
+                  <th scope="col">Lecture Term</th>
+                  <th scope="col">Lecture Credit</th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach (var x in Model)
+              {
+                  <tr>
+                      <td>@x.Lectures.LectureName</td>
+                      <td>@x.Lectures.LectureTerm</td>
+                      <td>@x.Lectures.LecAKTS</td>
+                  </tr>
+              }
+
+          </tbody>
+      </table>

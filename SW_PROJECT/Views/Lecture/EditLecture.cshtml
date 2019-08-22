@@ -1,0 +1,62 @@
+﻿@using SW_PROJECT.Models;
+@model SW_PROJECT.Models.Lectures
+@{
+    ViewBag.Title = "EditLecture";
+}
+
+<div class="row">
+    <div class=" col-lg-12">
+        <h3 class="page-header">Lecture Update Page</h3>
+        <hr />
+
+        <form class="form-signin" action="/Lecture/EditLecture" method="post">
+
+                <div class="hidden">
+                     <div class="form-group">
+                    <input type="text" name="ID" value="@Model.ID" />
+
+                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Lecture Name</label>
+                    <input type="text" class="form-control" name="LectureName" value="@Model.LectureName">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Lecture Term</label>
+                    <input type="number" class="form-control" name="LectureTerm" value="@Model.LectureTerm">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Lecture Credit</label>
+                    <input type="number" class="form-control" name="LectureCredit" value="@Model.LecAKTS">
+                </div>
+
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Department :</label>
+                    </div>
+                    <select name="DeptID" class="custom-select" id="inputGroupSelect01">
+                        <option selected>Please Select...</option>
+                        @{
+                            SIS_DB_Entities db = new SIS_DB_Entities();
+
+                            foreach (var x in db.Departments)
+                            {
+                                <option value="@x.ID">@x.DeptName</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+    </div>
+
+</div>
+

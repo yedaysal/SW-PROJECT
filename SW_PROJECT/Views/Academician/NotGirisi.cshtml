@@ -1,0 +1,90 @@
+﻿@using SW_PROJECT.Models;
+@model List<Students>
+@{
+    ViewBag.Title = "NotGirisi";
+}
+
+<div style="display:none">
+    <form method="post" action="/Academician/NotGirisi" id="submit_form">
+        <input type="text" name="id" id="id" class="form-control">
+        <input type="text" name="disC" id="disC" class="form-control" placeholder="Please dnter discontinuity." aria-label="disC" aria-describedby="basic-addon1">
+        <input type="text" name="midterm" id="midterm" class="form-control" placeholder="Please enter midterm grade." aria-label="midterm" aria-describedby="basic-addon1">
+        <input type="text" name="final" id="final" class="form-control" placeholder="Please enter final grade." aria-label="final" aria-describedby="basic-addon1">
+    </form>
+</div>
+
+
+    <div class=" table-responsive">
+        <table id="table" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Student Number</th>
+                    <th>Discontinuity</th>
+                    <th>Midterm Grade</th>
+                    <th>Final Grade</th>
+                    <th>Average</th>
+                    <th>Status</th>
+                    <th>Operation</th>
+
+                </tr>
+          
+
+            </thead>
+            <tbody>
+                @{
+                    foreach (var student in Model)
+                    {
+                        var average = 0;
+
+                        if (student.Midterm != null && student.Final != null)
+                        {
+                            average = ((student.Midterm.Value * 40) / 100) + ((student.Final.Value * 60) / 100);
+                        }
+
+
+                        string status = "FAILED";
+                        if(student.Midterm == null && student.Final == null )
+                        {
+                            status = "NOT GRADED";
+                        }
+                        if (average >= 60 && student.DisC < 10)
+                        {
+                            status = "PASSED";
+                        }
+
+
+                        <tr>
+                           
+                            <td>@student.Users.Username</td>
+                            <td>@student.Users.UserNum</td>
+                            <td><input type="text" class="form-control disC" value="@student.DisC" aria-label="disC" aria-describedby="basic-addon1"></td>
+                            <td><input type="text" class="form-control midterm" value="@student.Midterm" aria-label="midterm" aria-describedby="basic-addon1"></td>
+                            <td><input type="text" class="form-control final"  value="@student.Final" aria-label="final" aria-describedby="basic-addon1"></td>
+                            <td>@average</td>
+                            <td>@status</td>
+                            <td><input type="submit" value="Save" class="btn btn-default not_kaydet" row_id="@student.ID" /></td>
+                            
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+@section Script
+{
+    <script>
+        $(".not_kaydet").click(function () {
+            $("#disC").val(($(this).closest("tr").find(".disC")).val());
+            $("#midterm").val(($(this).closest("tr").find(".midterm")).val());
+            $("#final").val(($(this).closest("tr").find(".final")).val());
+            $("#resist").val(($(this).closest("tr").find(".resist")).val());
+            $("#id").val($(this).attr("row_id"));
+            $("#submit_form").submit();
+        });
+    </script>
+}
+
+

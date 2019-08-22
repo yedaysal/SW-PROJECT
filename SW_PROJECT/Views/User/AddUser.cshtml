@@ -1,0 +1,94 @@
+﻿@using SW_PROJECT.Models;
+@{
+    ViewBag.Title = "AddUser";
+}
+
+
+<div class="row">
+    <div class=" col-lg-12">
+        <h3 class="page-header">User Addition</h3>
+        <hr />
+
+        <form class="form-signin" action="/User/AddUser" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">User Name</label>
+                <input type="text" class="form-control" name="Username" placeholder="User Name" required>
+
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" name="Password" placeholder="Password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Email</label>
+                <input type="email" class="form-control" name="Email" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">School Number</label>
+                <input type="text" class="form-control" name="UserNum" placeholder="School Number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Citizen Number</label>
+                <input type="text" class="form-control" name="CitizenNum" placeholder="Citizen Number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Phone</label>
+                <input type="text" class="form-control" name="Phone" placeholder="Phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Address</label>
+                <input type="text" class="form-control" name="Address" placeholder="Address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Title</label>
+                <input type="text" class="form-control" name="UserDegree" placeholder="Title" required>
+            </div>
+
+
+
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Group Name:</label>
+                </div>
+                <select name="GroupID" class="selectpicker" id="inputGroupSelect01">
+                    @{
+                        SIS_DB_Entities db = new SIS_DB_Entities();
+                        foreach (var x in db.Groups)
+                        {
+                            <option value="@x.ID">@x.GroupName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Department Name:</label>
+                </div>
+                <select name="DeptID" class="custom-select" id="inputGroupSelect02">
+                    @{
+
+                        foreach (var x in db.Departments)
+                        {
+                            <option value="@x.ID">@x.DeptName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" onclick="return confirm('User Successfully Added!');">Save</button>
+        </form>
+
+    </div>
+
+</div>
+
+

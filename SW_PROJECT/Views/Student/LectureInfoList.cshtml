@@ -1,0 +1,53 @@
+﻿@using SW_PROJECT.Models;
+@model List<Students>
+@{
+    ViewBag.Title = "LectureInfoList";
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped" >
+        <thead>
+            <tr>
+                <th scope="col">Lecture Name</th>
+                <th scope="col">Discontinuity</th>
+                <th scope="col">Midterm</th>
+                <th scope="col">Final</th>
+                <th scope="col">Average</th>
+                <th scope="col">Status</th>
+            </tr>    
+        </thead>
+        <tbody>
+            @{ 
+                foreach(var student in Model)
+                {
+                    var average = 0;
+
+                    if (student.Midterm != null && student.Final !=null)
+                    {
+                        average = ((student.Midterm.Value * 40) / 100) + ((student.Final.Value * 60) / 100);
+                    }
+
+                    string status = "FAILED";
+                    if(student.Midterm == null && student.Final == null)
+                    {
+                        status = "NOT GRADED";
+                    }
+                    if(average >= 60)
+                    {
+                        status = "PASSED";
+                    }
+                    <tr>
+                        <td>@student.Lectures.LectureName</td>
+                        <td>@student.DisC</td>
+                        <td>@student.Midterm</td>
+                        <td>@student.Final</td>
+                        <td>@average</td>
+                        <td>@status</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+

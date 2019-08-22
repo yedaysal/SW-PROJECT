@@ -1,0 +1,15 @@
+﻿@using SW_PROJECT.Models;
+@model List<Lecturers>
+@{
+    ViewBag.Title = "GivenLectures";
+}
+
+<div class="list-group">
+    
+    @{ 
+        foreach(var lec in Model)
+        {
+            <a href="/Academician/NotGirisi/@lec.LecID" type="button" class="list-group-item list-group-item-action">@lec.Lectures.LectureName</a> 
+        }
+    }
+</div>

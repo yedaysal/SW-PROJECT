@@ -1,0 +1,85 @@
+﻿@using SW_PROJECT.Models;
+@model List<Departments>
+
+@{
+    ViewBag.Title = "AssignLecture";
+}
+<div class="/startbootstrap-sb-admin-2-gh-pages/clockpreloader/preloader"></div>
+<form method="post" action="/User/AssignLecture">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Department :</label>
+        </div>
+        <select name="DeptID" class="custom-select" id="departments">
+            <option selected>Please Select...</option>
+            @{
+                SIS_DB_Entities db = new SIS_DB_Entities();
+                foreach(var dep in Model)
+                {
+                    <option value="@dep.ID">@dep.DeptName</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Academicians :</label>
+        </div>
+        <select name="acaID" class="custom-select" id="academicians">
+            <option selected>Please Select...</option>
+          
+        </select>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Lecture :</label>
+        </div>
+        <select name="lecID" class="custom-select" id="lectures">
+            <option selected>Please Select...</option>
+         
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+@section Script{
+    <script>
+        $("#departments").on("change", function () {
+            $('#lectures').empty();
+            $('#lectures').append($('<option>', { value: 0, text: 'Seçiniz...' }));
+            $('#academicians').empty();
+            $('#academicians').append($('<option>', { value: 0, text: 'Seçiniz...' }));
+            $.ajax({
+                url: "/User/GetAcademician/" + $(this).val(),
+                type: "post",
+                dataType: "json",
+                success: function (academicians) {
+                    for (var i = 0; i < academicians.length; i++) {
+                        $('#academicians').append('<option value=' + academicians[i].acadID + '>' + academicians[i].acadName + '</option>');
+                    }
+                }
+            })
+        });
+
+
+        $("#academicians").on("change", function () {
+            $('#lectures').empty();
+            $('#lectures').append($('<option>', { value: 0, text: 'Seçiniz...' }));
+            $.ajax({
+                url: "/User/GetLecture/" + $(this).val(),
+                type: "post",
+                dataType: "json",
+                success: function (lectures) {
+                    for (var i = 0; i < lectures.length; i++) {
+                        
+                            $('#lectures').append('<option value=' + lectures[i].dep_acad_lecID + '>' + lectures[i].dep_acad_lecName + '</option>');
+                    }
+                }
+            })
+        });
+
+    </script>
+}
